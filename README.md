@@ -17,7 +17,6 @@ cronTab with Jalali calendar support
 */
 
 
-
 "*/10 * * * * *"     // every 10 seconds
 
 "* */10 * * * *"  // every 10 minutes
