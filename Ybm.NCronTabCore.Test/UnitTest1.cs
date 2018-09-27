@@ -37,13 +37,13 @@ namespace Ybm.NCronTabCore.Test
        
 
         [Theory]
-        [InlineData("*/10 * * * * *")]  // every 10 seconds
+        [InlineData("*/10 * * * * *")]  
         public void Secondly(string cronPattern)
         {
             var startDate = new DateTime(2018, 6, 1, 10, 50, 25);
             var endDate = new DateTime(2018, 7, 1, 10, 50, 25);
 
-            var res = new CronTabScheduler().NextMainOccurances(cronPattern, startDate, endDate, true);
+            var res = new CronTabScheduler().Occurances(cronPattern, startDate, endDate, true);
 
             Assert.True(res.Any());
         }
@@ -56,7 +56,7 @@ namespace Ybm.NCronTabCore.Test
             var startDate = new DateTime(2018, 6, 1, 10, 50, 25);
             var endDate = new DateTime(2018, 10, 1, 10, 50, 25);
 
-            var res = new CronTabScheduler().NextMainOccurances(cronPattern, startDate, endDate, true);
+            var res = new CronTabScheduler().Occurances(cronPattern, startDate, endDate, true);
 
             Assert.True(res.Any());
         }
@@ -69,7 +69,7 @@ namespace Ybm.NCronTabCore.Test
             var startDate = new DateTime(2018, 6, 1, 10, 50, 25);
             var endDate = new DateTime(2018, 10, 1, 10, 50, 25);
 
-            var res = new CronTabScheduler().NextMainOccurances(cronPattern, startDate, endDate, true);
+            var res = new CronTabScheduler().Occurances(cronPattern, startDate, endDate, true);
 
             Assert.True(res.Any());
         }
@@ -82,7 +82,7 @@ namespace Ybm.NCronTabCore.Test
             var startDate = new DateTime(2018, 6, 1, 10, 50, 25);
             var endDate = new DateTime(2018, 10, 1, 10, 50, 25);
 
-            var res = new CronTabScheduler().NextMainOccurances(cronPattern, startDate, endDate, true);
+            var res = new CronTabScheduler().Occurances(cronPattern, startDate, endDate, true);
 
             Assert.True(res.Any());
         }
@@ -95,7 +95,7 @@ namespace Ybm.NCronTabCore.Test
             var startDate = new DateTime(2018, 6, 1, 10, 50, 25);
             var endDate = new DateTime(2018, 10, 1, 10, 50, 25);
 
-            var res = new CronTabScheduler().NextMainOccurances(cronPattern, startDate, endDate, true);
+            var res = new CronTabScheduler().Occurances(cronPattern, startDate, endDate, true);
 
             Assert.True(res.Any());
         }
@@ -107,7 +107,7 @@ namespace Ybm.NCronTabCore.Test
             var startDate = new DateTime(2018, 6, 1, 10, 50, 25);
             var endDate = new DateTime(2018, 10, 1, 10, 50, 25);
 
-            var res = new CronTabScheduler().NextMainOccurances(cronPattern, startDate, endDate, true);
+            var res = new CronTabScheduler().Occurances(cronPattern, startDate, endDate, true);
 
             Assert.True(res.Any());
         }
@@ -120,7 +120,7 @@ namespace Ybm.NCronTabCore.Test
             var startDate = new DateTime(2018, 6, 1, 10, 50, 25);
             var endDate = new DateTime(2018, 10, 1, 10, 50, 25);
 
-            var res = new CronTabScheduler().NextMainOccurances(cronPattern, startDate, endDate, true);
+            var res = new CronTabScheduler().Occurances(cronPattern, startDate, endDate, true);
 
             Assert.True(res.Any());
         }
@@ -132,7 +132,7 @@ namespace Ybm.NCronTabCore.Test
             var startDate = new DateTime(2018, 6, 1, 10, 50, 25);
             var endDate = new DateTime(2018, 12, 1, 10, 50, 25);
 
-            var res = new CronTabScheduler().NextMainOccurances(cronPattern, startDate, endDate, true);
+            var res = new CronTabScheduler().Occurances(cronPattern, startDate, endDate, true);
 
             Assert.Equal("1397/3/31 9:00:00 AM", res[0]);
             Assert.Equal("1397/4/31 9:00:00 AM", res[1]);
@@ -140,8 +140,6 @@ namespace Ybm.NCronTabCore.Test
             Assert.Equal("1397/6/31 9:00:00 AM", res[3]);
             Assert.Equal("1397/7/30 9:00:00 AM", res[4]);
             Assert.Equal("1397/8/30 9:00:00 AM", res[5]);
-
-
         }
 
 
@@ -152,12 +150,11 @@ namespace Ybm.NCronTabCore.Test
             var startDate = new DateTime(2018, 1, 1, 10, 50, 25);
             var endDate = new DateTime(2019, 12, 1, 10, 50, 25);
 
-            var res = new CronTabScheduler().NextMainOccurances(cronPattern, startDate, endDate, true);
+            var res = new CronTabScheduler().Occurances(cronPattern, startDate, endDate, true);
 
             Assert.Equal("1396/11/1 9:00:00 AM", res[0]);
             Assert.Equal("1397/9/1 9:00:00 AM", res[10]);
             Assert.Equal("1398/7/1 9:00:00 AM", res[20]);
-
         }
 
 
@@ -168,14 +165,13 @@ namespace Ybm.NCronTabCore.Test
             var startDate = new DateTime(2018, 6, 1, 10, 50, 25);
             var endDate = new DateTime(2018, 12, 1, 10, 50, 25);
 
-            var res = new CronTabScheduler().NextMainOccurances(cronPattern, startDate, endDate, true);
+            var res = new CronTabScheduler().Occurances(cronPattern, startDate, endDate, true);
 
             Assert.Equal("1397/4/10 9:00:00 AM", res[0]);
             Assert.Equal("1397/5/10 9:00:00 AM", res[1]);
             Assert.Equal("1397/6/10 9:00:00 AM", res[2]);
             Assert.Equal("1397/7/10 9:00:00 AM", res[3]);
             Assert.Equal("1397/8/10 9:00:00 AM", res[4]);
-
         }
 
 
@@ -190,7 +186,7 @@ namespace Ybm.NCronTabCore.Test
             var startDate = new DateTime(2018, 6, 1, 10, 50, 25);
             var endDate = new DateTime(2018, 12, 1, 10, 50, 25);
 
-            var res = new CronTabScheduler().NextMainOccurances(cronPattern, startDate, endDate, true);
+            var res = new CronTabScheduler().Occurances(cronPattern, startDate, endDate, true);
 
             Assert.Equal("1397/3/15 9:10:00 AM", res[0]);
             Assert.Equal("1397/5/15 9:10:00 AM", res[1]);

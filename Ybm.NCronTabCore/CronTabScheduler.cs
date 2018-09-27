@@ -20,7 +20,7 @@ namespace Ybm.NCronTabCore
     {
         private CronPattern Parts { get; set; }
 
-        public List<string> NextMainOccurances(string cron, DateTime startDate, DateTime endDate, bool convertToJalali = false)
+        public List<string> Occurances(string cron, DateTime startDate, DateTime endDate, bool convertToJalali = false)
         {
             List<DateTime> occurances = new List<DateTime>();
             List<string> FinalOccurances = new List<string>();
@@ -127,31 +127,6 @@ namespace Ybm.NCronTabCore
 
         }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         /// <summary>
         /// 
         /// </summary>
@@ -182,8 +157,6 @@ namespace Ybm.NCronTabCore
         /// <param name="dateTimeAsGregorian"></param>
         /// <param name="format"></param>
         /// <returns> JalaliDateTime </returns>
-
-
         public static string GregorianToJalali2(DateTime dateTimeAsGregorian, string format = "yyyy/mm/dd")
         {
             if (dateTimeAsGregorian.Year < 1000) dateTimeAsGregorian = DateTime.Now;
@@ -196,7 +169,12 @@ namespace Ybm.NCronTabCore
             return jalaliDateTime;
         }
 
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="dateTimeAsGregorian"></param>
+        /// <param name="format"></param>
+        /// <returns></returns>
         public string GregorianToJalali(DateTime dateTimeAsGregorian, string format = "yyyy/mm/dd")
         {
             if (dateTimeAsGregorian.Year < 1000) dateTimeAsGregorian = DateTime.Now;
