@@ -17,11 +17,15 @@ cronTab with Jalali calendar support
     */
 
 
+Every N seconds
     "*/10 * * * * *"     // every 10 seconds
 
+Every N minutes
     "* */10 * * * *"  // every 10 minutes
 
+Every N hours
     "* * */5 * * *"  // every 5 hours
+
 
     "* 0 9 */5 * * *" // every 5 days at 9:00
 
