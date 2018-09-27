@@ -43,8 +43,25 @@ Every N hours
 
     ("* 0 9 1 * *"  // DayOfMonth 1, months = * , at 9:00
 
-    "* 0 9 10 * *"  // DayOfMonth 10, months = * , at 9:30
+Tenth of every month
 
+    "* 0 9 10 * *"  
+
+        [Theory]
+        [InlineData("* 0 9 10 * *")]  // DayOfMonth 10, months = * , at 9:30
+        public void Tenth_SpecificDays_Montly(string cronPattern)
+        {
+            var startDate = new DateTime(2018, 6, 1, 10, 50, 25);
+            var endDate = new DateTime(2018, 12, 1, 10, 50, 25);
+
+            var res = new CronTabScheduler().NextMainOccurances(cronPattern, startDate, endDate, true);
+
+            Assert.Equal("1397/4/10 9:00:00 AM", res[0]);
+            Assert.Equal("1397/5/10 9:00:00 AM", res[1]);
+            Assert.Equal("1397/6/10 9:00:00 AM", res[2]);
+            Assert.Equal("1397/7/10 9:00:00 AM", res[3]);
+            Assert.Equal("1397/8/10 9:00:00 AM", res[4]);
+        }
 
 
 Specific day on special days with hour and minute
