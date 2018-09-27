@@ -1,21 +1,21 @@
 # Ybm.NCronTabCore
 cronTab with Jalali calendar support 
 
-`
-/*
-┌───────────── Second (0 - 59)
-| ┌───────────── minute (0 - 59)
-| │ ┌───────────── hour (0 - 23)
-| │ │ ┌───────────── day of month (1 - 31)
-| │ │ │ ┌───────────── month (1 - 12)
-| │ │ │ │ ┌───────────── day of week (0 - 6) (Sunday to Saturday;
-| │ │ │ │ │                                       7 is also Sunday)
-| │ │ │ │ │
-| │ │ │ │ │
-* * * * * *  command to execute
-* 
-*/
-`
+
+    /*
+    ┌───────────── Second (0 - 59)
+    | ┌───────────── minute (0 - 59)
+    | │ ┌───────────── hour (0 - 23)
+    | │ │ ┌───────────── day of month (1 - 31)
+    | │ │ │ ┌───────────── month (1 - 12)
+    | │ │ │ │ ┌───────────── day of week (0 - 6) (Sunday to Saturday;
+    | │ │ │ │ │                                       7 is also Sunday)
+    | │ │ │ │ │
+    | │ │ │ │ │
+    * * * * * *  command to execute
+    * 
+    */
+
 
 "*/10 * * * * *"     // every 10 seconds
 
