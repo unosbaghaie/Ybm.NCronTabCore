@@ -32,13 +32,13 @@ using Xunit;
 
 namespace Ybm.NCronTabCore.Test
 {
-    public class UnitTest1
+    public class CronPatternGeneratorTest
     {
-       
 
+        #region Secondly
         [Theory]
-        [InlineData("*/10 * * * * *")]  
-        public void Secondly(string cronPattern)
+        [InlineData("*/10 * * * * *")]
+        public void Secondly_Every_10_Seconds(string cronPattern)
         {
             var startDate = new DateTime(2018, 6, 1, 10, 50, 25);
             var endDate = new DateTime(2018, 7, 1, 10, 50, 25);
@@ -47,11 +47,13 @@ namespace Ybm.NCronTabCore.Test
 
             Assert.True(res.Any());
         }
+        #endregion
 
-
+        
+        #region Minutely
         [Theory]
-        [InlineData("* */10 * * * *")]  // every 10 minutes
-        public void Minutely(string cronPattern)
+        [InlineData("* */10 * * * *")]
+        public void Minutely_Every_10_Minutes(string cronPattern)
         {
             var startDate = new DateTime(2018, 6, 1, 10, 50, 25);
             var endDate = new DateTime(2018, 10, 1, 10, 50, 25);
@@ -60,11 +62,13 @@ namespace Ybm.NCronTabCore.Test
 
             Assert.True(res.Any());
         }
+        #endregion
 
-
+        
+        #region Hourly
         [Theory]
-        [InlineData("* * */5 * * *")]  // every 5 hours
-        public void Hourly(string cronPattern)
+        [InlineData("* * */5 * * *")]
+        public void Hourly_Every_5_Hours(string cronPattern)
         {
             var startDate = new DateTime(2018, 6, 1, 10, 50, 25);
             var endDate = new DateTime(2018, 10, 1, 10, 50, 25);
@@ -72,37 +76,14 @@ namespace Ybm.NCronTabCore.Test
             var res = new CronTabScheduler().Occurances(cronPattern, startDate, endDate, true);
 
             Assert.True(res.Any());
-        }
+        } 
+        #endregion
 
 
+        #region Daily
         [Theory]
-        [InlineData("* 0 9 */5 * * *")] // every 5 days at 9:00
-        public void Every_5_Days_At_9(string cronPattern)
-        {
-            var startDate = new DateTime(2018, 6, 1, 10, 50, 25);
-            var endDate = new DateTime(2018, 10, 1, 10, 50, 25);
-
-            var res = new CronTabScheduler().Occurances(cronPattern, startDate, endDate, true);
-
-            Assert.True(res.Any());
-        }
-
-
-        [Theory]
-        [InlineData("* 0 9 */1 * * *")] // everydays at 9:00
-        public void EveryDayAt9(string cronPattern)
-        {
-            var startDate = new DateTime(2018, 6, 1, 10, 50, 25);
-            var endDate = new DateTime(2018, 10, 1, 10, 50, 25);
-
-            var res = new CronTabScheduler().Occurances(cronPattern, startDate, endDate, true);
-
-            Assert.True(res.Any());
-        }
-
-        [Theory]
-        [InlineData("* 10 9 15 */1,3,5,7,9,11 *")]  // DayOfMonth 15, months = 1,3,5,7,9,11 , at 9:10
-        public void Montly(string cronPattern)
+        [InlineData("* 0 9 */5 * * *")]
+        public void Daily_Every_5_Days_At_9(string cronPattern)
         {
             var startDate = new DateTime(2018, 6, 1, 10, 50, 25);
             var endDate = new DateTime(2018, 10, 1, 10, 50, 25);
@@ -113,9 +94,23 @@ namespace Ybm.NCronTabCore.Test
         }
 
         [Theory]
-        [InlineData("* 10 9 * * */0,5")] // every saturday and thursday at 9:10
-        [InlineData("* 10 9 * * */1")]  // every sunday at 9:10
-        public void Every_Saturday(string cronPattern)
+        [InlineData("* 0 9 */1 * * *")]
+        public void Daily_EveryDay_At_9(string cronPattern)
+        {
+            var startDate = new DateTime(2018, 6, 1, 10, 50, 25);
+            var endDate = new DateTime(2018, 10, 1, 10, 50, 25);
+
+            var res = new CronTabScheduler().Occurances(cronPattern, startDate, endDate, true);
+
+            Assert.True(res.Any());
+        }
+        #endregion
+
+
+        #region Weekly
+        [Theory]
+        [InlineData("* 10 9 * * */0,5")]
+        public void Weekly_Every_Saturday_And_Thursday_At_9(string cronPattern)
         {
             var startDate = new DateTime(2018, 6, 1, 10, 50, 25);
             var endDate = new DateTime(2018, 10, 1, 10, 50, 25);
@@ -126,8 +121,36 @@ namespace Ybm.NCronTabCore.Test
         }
 
         [Theory]
-        [InlineData("* 0 9 L * *")]  // DayOfMonth last day, months = * , at 9:30
-        public void LastDay_SpecificDays_Montly(string cronPattern)
+        [InlineData("* 10 9 * * */1")]
+        public void Weekly_Every_Saturday_At_9(string cronPattern)
+        {
+            var startDate = new DateTime(2018, 6, 1, 10, 50, 25);
+            var endDate = new DateTime(2018, 10, 1, 10, 50, 25);
+
+            var res = new CronTabScheduler().Occurances(cronPattern, startDate, endDate, true);
+
+            Assert.True(res.Any());
+        }
+
+        #endregion
+
+
+        #region Monthly
+        [Theory]
+        [InlineData("* 10 9 15 */1,3,5,7,9,11 *")]
+        public void Montly_SpecificDay_SpecificMonths(string cronPattern)
+        {
+            var startDate = new DateTime(2018, 6, 1, 10, 50, 25);
+            var endDate = new DateTime(2018, 10, 1, 10, 50, 25);
+
+            var res = new CronTabScheduler().Occurances(cronPattern, startDate, endDate, true);
+
+            Assert.True(res.Any());
+        }
+
+        [Theory]
+        [InlineData("* 0 9 L * *")]
+        public void Montly_LastDay(string cronPattern)
         {
             var startDate = new DateTime(2018, 6, 1, 10, 50, 25);
             var endDate = new DateTime(2018, 12, 1, 10, 50, 25);
@@ -142,10 +165,19 @@ namespace Ybm.NCronTabCore.Test
             Assert.Equal("1397/8/30 9:00:00 AM", res[5]);
         }
 
+        [Theory]
+        [InlineData("* 0 9 L */1,3,5,7,9,11 *")]
+        public void Montly_LastDay_SpecificMonths(string cronPattern)
+        {
+            var startDate = new DateTime(2018, 6, 1, 10, 50, 25);
+            var endDate = new DateTime(2018, 12, 1, 10, 50, 25);
+
+            var res = new CronTabScheduler().Occurances(cronPattern, startDate, endDate, true);
+        }
 
         [Theory]
-        [InlineData("* 0 9 1 * *")]  // DayOfMonth 1, months = * , at 9:00
-        public void FirstDay_SpecificDays_Montly(string cronPattern)
+        [InlineData("* 0 9 1 * *")]
+        public void Montly_FirstDay_At_9(string cronPattern)
         {
             var startDate = new DateTime(2018, 1, 1, 10, 50, 25);
             var endDate = new DateTime(2019, 12, 1, 10, 50, 25);
@@ -157,10 +189,9 @@ namespace Ybm.NCronTabCore.Test
             Assert.Equal("1398/7/1 9:00:00 AM", res[20]);
         }
 
-
         [Theory]
-        [InlineData("* 0 9 10 * *")]  // DayOfMonth 10, months = * , at 9:30
-        public void Tenth_SpecificDays_Montly(string cronPattern)
+        [InlineData("* 0 9 10 * *")]
+        public void Montly_Tenth_At_9(string cronPattern)
         {
             var startDate = new DateTime(2018, 6, 1, 10, 50, 25);
             var endDate = new DateTime(2018, 12, 1, 10, 50, 25);
@@ -174,14 +205,9 @@ namespace Ybm.NCronTabCore.Test
             Assert.Equal("1397/8/10 9:00:00 AM", res[4]);
         }
 
-
-        //(\* \d+ \d+ \d+ \*\/(\d+|\p{P}+)* \*)
-        //* 10 9 15 */1,3,5,7,9,11 *
-        //* 10 9 15 */1 *
         [Theory]
         [InlineData("* 10 9 15 */1,3,5,7,9,11 *")]
-
-        public void SpecificDays_in_SpecificMonths(string cronPattern)
+        public void Montly_SpecificDay_in_SpecificMonths(string cronPattern)
         {
             var startDate = new DateTime(2018, 6, 1, 10, 50, 25);
             var endDate = new DateTime(2018, 12, 1, 10, 50, 25);
@@ -191,6 +217,9 @@ namespace Ybm.NCronTabCore.Test
             Assert.Equal("1397/3/15 9:10:00 AM", res[0]);
             Assert.Equal("1397/5/15 9:10:00 AM", res[1]);
             Assert.Equal("1397/7/15 9:10:00 AM", res[2]);
-        }
+        } 
+        #endregion
+
+
     }
 }

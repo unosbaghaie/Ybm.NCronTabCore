@@ -18,16 +18,22 @@ namespace Ybm.NCronTabCore
 {
     public class CronTabScheduler
     {
-        private CronPattern Parts { get; set; }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="cron"></param>
+        /// <param name="startDate"></param>
+        /// <param name="endDate"></param>
+        /// <param name="convertToJalali"></param>
+        /// <returns></returns>
         public List<string> Occurances(string cron, DateTime startDate, DateTime endDate, bool convertToJalali = false)
         {
             List<DateTime> occurances = new List<DateTime>();
             List<string> FinalOccurances = new List<string>();
             CronPattern cronPattern = new CronPattern();
 
-            var pattern = cronPattern.Parse2(cron);
-            GetOccurances(startDate, endDate, occurances, pattern);
+            var pattern = cronPattern.Parse(cron);
+            RetrieveOccurances(startDate, endDate, occurances, pattern);
 
             if (convertToJalali == false)
                 return occurances.Cast<string>().ToList();
@@ -40,13 +46,17 @@ namespace Ybm.NCronTabCore
             }
 
             return FinalOccurances;
-
-            //return occurances;
         }
 
 
-
-        private static void GetOccurances(DateTime startDate, DateTime endDate, List<DateTime> occurances, Pattern pattern)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="startDate"></param>
+        /// <param name="endDate"></param>
+        /// <param name="occurances"></param>
+        /// <param name="pattern"></param>
+        private void RetrieveOccurances(DateTime startDate, DateTime endDate, List<DateTime> occurances, Pattern pattern)
         {
             if (pattern.UnitType == EnumUnitType.Secondly)
             {
@@ -131,7 +141,7 @@ namespace Ybm.NCronTabCore
         /// 
         /// </summary>
         /// <param name="dateTimeAsPersian"></param>
-        /// <returns> GregorianDateTime </returns>
+        /// <returns></returns>
         public DateTime JalaliToGregorian(string dateTimeAsPersian)
         {
             dateTimeAsPersian = dateTimeAsPersian.Replace("-", "/");
@@ -151,23 +161,7 @@ namespace Ybm.NCronTabCore
             PersianCalendar pcal = new PersianCalendar();
             return pcal.ToDateTime(year, month, day, hour, minute, 0, 0);
         }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="dateTimeAsGregorian"></param>
-        /// <param name="format"></param>
-        /// <returns> JalaliDateTime </returns>
-        public static string GregorianToJalali2(DateTime dateTimeAsGregorian, string format = "yyyy/mm/dd")
-        {
-            if (dateTimeAsGregorian.Year < 1000) dateTimeAsGregorian = DateTime.Now;
-            PersianCalendar pc = new PersianCalendar();
-            string jalaliDateTime = format.ToLower();
-            jalaliDateTime = jalaliDateTime.Replace("yyyy", pc.GetYear(dateTimeAsGregorian).ToString());
-            jalaliDateTime = jalaliDateTime.Replace("mm", pc.GetMonth(dateTimeAsGregorian).ToString());
-            jalaliDateTime = jalaliDateTime.Replace("dd", pc.GetDayOfMonth(dateTimeAsGregorian).ToString());
-            jalaliDateTime = jalaliDateTime + " " + dateTimeAsGregorian.ToLongTimeString();
-            return jalaliDateTime;
-        }
+        
 
         /// <summary>
         /// 

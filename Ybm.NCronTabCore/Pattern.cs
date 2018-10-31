@@ -33,16 +33,17 @@ namespace Ybm.NCronTabCore
         
 
         public int Minute { get; set; }
-
         public int Hour { get; set; }
-
 
         public List<int> Days { get; set; }
         public List<int> Months { get; set; }
-        public string patternMinute { get; set; }
-        public string patternHour { get; set; }
-        public string patternDayOofMonth { get; set; }
-        public string patternMonth { get; set; }
-        public string patternDayOfWeek { get; set; }
+
+
+        public string PatternSecond { get; set; }
+        public string PatternMinute { get; set; }
+        public string PatternHour { get; set; }
+        public string PatternDayOfMonth { get; set; }
+        public string PatternMonth { get; set; }
+        public string PatternDayOfWeek { get; set; }
     }
 }

@@ -19,85 +19,71 @@ namespace Ybm.NCronTabCore
 {
     internal class CronPattern
     {
-
-
-        public string patternSecond { get; set; }
-        public string patternMinute { get; set; }
-        public string patternHour { get; set; }
-        public string patternDayOfMonth { get; set; }
-        public string patternMonth { get; set; }
-        public string patternDayOfWeek { get; set; }
-
-
         public CronPattern()
         {
-            Minutes = new HashSet<int>();
-            Hours = new HashSet<int>();
-            Days = new HashSet<int>();
-            Months = new HashSet<int>();
-            Years = new HashSet<int>();
-            WeekDays = new HashSet<int>();
-
+            minutes = new HashSet<int>();
+            hours = new HashSet<int>();
+            days = new HashSet<int>();
+            months = new HashSet<int>();
+            years = new HashSet<int>();
+            weekDays = new HashSet<int>();
         }
-        public HashSet<int> Minutes { get; set; }
-        public HashSet<int> Hours { get; set; }
-        public HashSet<int> Days { get; set; }
-        public HashSet<int> Months { get; set; }
-        public HashSet<int> Years { get; set; }
-        public HashSet<int> WeekDays { get; set; }
+        HashSet<int> minutes { get; set; }
+        HashSet<int> hours { get; set; }
+        HashSet<int> days { get; set; }
+        HashSet<int> months { get; set; }
+        HashSet<int> years { get; set; }
+        HashSet<int> weekDays { get; set; }
 
 
 
-        public Pattern Parse2(string cron)
+        public Pattern Parse(string cron)
         {
             var parts = cron.Split(' ');
 
-            patternSecond = parts[0];
-            patternMinute = parts[1];
-            patternHour = parts[2];
-            patternDayOfMonth = parts[3];
-            patternMonth = parts[4];
-            patternDayOfWeek = parts[5];
+            var pattern = new Pattern();
+
+            pattern.PatternSecond = parts[0];
+            pattern.PatternMinute = parts[1];
+            pattern.PatternHour = parts[2];
+            pattern.PatternDayOfMonth = parts[3];
+            pattern.PatternMonth = parts[4];
+            pattern.PatternDayOfWeek = parts[5];
 
             // secondly
             if (Regex.IsMatch(cron, @"((\*\/\d+|\d+) \* \* \* \* \*)+"))
             {
-                var pattern = new Pattern();
                 pattern.UnitType = EnumUnitType.Secondly;
-                ParsePattern(patternSecond, pattern);
-
+                ParsePattern(pattern.PatternSecond, pattern);
                 return pattern;
             }
 
             // minutely
             if (Regex.IsMatch(cron, @"(\* (\*\/\d+|\d+) \* \* \* \*)+"))
             {
-                var pattern = new Pattern();
                 pattern.UnitType = EnumUnitType.Minutely;
-                ParsePattern(patternMinute, pattern);
+                ParsePattern(pattern.PatternMinute, pattern);
                 return pattern;
             }
 
             // hourly
             if (Regex.IsMatch(cron, @"(\* \* (\*\/\d+|\d+) \* \* \*)+"))
             {
-                var pattern = new Pattern();
                 pattern.UnitType = EnumUnitType.Hourly;
-                ParsePattern(patternHour, pattern);
+                ParsePattern(pattern.PatternHour, pattern);
                 return pattern;
             }
 
             // Daily
             if (Regex.IsMatch(cron, @"(\* \d+ \d+ \*/\d+ \* \*)+"))
             {
-                var pattern = new Pattern();
                 pattern.UnitType = EnumUnitType.Daily;
 
-                var everNDays = patternDayOfMonth.Split('/')[1].Split(',');
+                var everNDays = pattern.PatternDayOfMonth.Split('/')[1].Split(',');
                 pattern.Days.AddRange(Array.ConvertAll(everNDays, int.Parse));
 
-                pattern.Hour = int.Parse(patternHour);
-                pattern.Minute = int.Parse(patternMinute);
+                pattern.Hour = int.Parse(pattern.PatternHour);
+                pattern.Minute = int.Parse(pattern.PatternMinute);
                 return pattern;
             }
 
@@ -106,66 +92,60 @@ namespace Ybm.NCronTabCore
             // Days of months
             if (Regex.IsMatch(cron, @"(^\* \d+ \d+ \d+ \*\/(\d+|\,)+ \*)"))
             {
-                var pattern = new Pattern();
                 pattern.UnitType = EnumUnitType.Monthly;
-                var months = patternMonth.Split('/')[1].Split(',');
+                var months = pattern.PatternMonth.Split('/')[1].Split(',');
                 pattern.Months.AddRange(Array.ConvertAll(months, int.Parse));
 
-                var daysOfmonth = patternDayOfMonth.Split(',');
+                var daysOfmonth = pattern.PatternDayOfMonth.Split(',');
                 pattern.Days.AddRange(Array.ConvertAll(daysOfmonth, int.Parse));
 
-                pattern.Hour = int.Parse(patternHour);
-                pattern.Minute = int.Parse(patternMinute);
-
+                pattern.Hour = int.Parse(pattern.PatternHour);
+                pattern.Minute = int.Parse(pattern.PatternMinute);
                 return pattern;
             }
 
             // Days of week
             if (Regex.IsMatch(cron, @"(^\* \d+ \d+ \* \* \*\/(\d+|\,)+)"))
             {
-                var pattern = new Pattern();
                 pattern.UnitType = EnumUnitType.Weekly;
-                
-                var daysOfWeek= patternDayOfWeek.Split('/')[1].Split(',');
+
+                var daysOfWeek = pattern.PatternDayOfWeek.Split('/')[1].Split(',');
                 pattern.Days.AddRange(Array.ConvertAll(daysOfWeek, int.Parse));
 
-                pattern.Hour = int.Parse(patternHour);
-                pattern.Minute = int.Parse(patternMinute);
-
+                pattern.Hour = int.Parse(pattern.PatternHour);
+                pattern.Minute = int.Parse(pattern.PatternMinute);
                 return pattern;
             }
 
-
-            //(\* \d \d (\d|L) \* \*)  first or last days of every months
-            //* 0 9 1 * *
-            //* 0 9 1 * *
-            //* 0 9 L * *
-            if (Regex.IsMatch(cron,@"(\* \d+ \d+ (\d+|L) \* \*)"))
+            //Last day or first day on months
+            if (Regex.IsMatch(cron, @"(\* \d+ \d+ (\d+|L) ((\*)|(\*\/)(\d+|\,)+) \*)"))
             {
-                var pattern = new Pattern();
                 pattern.UnitType = EnumUnitType.Monthly;
 
                 int day = 0;
-                if (int.TryParse(patternDayOfMonth, out day))
+                if (int.TryParse(pattern.PatternDayOfMonth, out day))
                 {
                     pattern.Days.Add(day);
                 }
                 else
                 {
-                    if (patternDayOfMonth.ToLower() == "l")
+                    if (pattern.PatternDayOfMonth.ToLower() == "l")
                     {
                         pattern.Days.Add(-1);
                     }
                 }
-                pattern.Hour = int.Parse(patternHour);
-                pattern.Minute= int.Parse(patternMinute);
+
+                if (pattern.PatternMonth != "*")
+                {
+                    var months = pattern.PatternMonth.Split('/')[1].Split(',');
+                    pattern.Months.AddRange(Array.ConvertAll(months, int.Parse));
+                }
+                pattern.Hour = int.Parse(pattern.PatternHour);
+                pattern.Minute = int.Parse(pattern.PatternMinute);
                 return pattern;
             }
 
-            
-
-
-                return null;
+            return null;
         }
 
         private void ParsePattern(string patternSecond, Pattern pattern)

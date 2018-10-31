@@ -6,4 +6,3 @@ C:\Users\y.baghaee\source\repos\Ybm.NCronTabCore\Ybm.NCronTabCore\obj\Debug\nets
 C:\Users\y.baghaee\source\repos\Ybm.NCronTabCore\Ybm.NCronTabCore\obj\Debug\netstandard2.0\Ybm.NCronTabCore.AssemblyInfo.cs
 C:\Users\y.baghaee\source\repos\Ybm.NCronTabCore\Ybm.NCronTabCore\obj\Debug\netstandard2.0\Ybm.NCronTabCore.dll
 C:\Users\y.baghaee\source\repos\Ybm.NCronTabCore\Ybm.NCronTabCore\obj\Debug\netstandard2.0\Ybm.NCronTabCore.pdb
-C:\Users\y.baghaee\source\repos\Ybm.NCronTabCore\Ybm.NCronTabCore\obj\Debug\netstandard2.0\Ybm.NCronTabCore.csprojAssemblyReference.cache
